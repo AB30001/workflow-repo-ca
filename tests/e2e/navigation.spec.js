@@ -8,9 +8,20 @@ test('home page shows welcome message', async ({ page }) => {
   await expect(page.locator('text=Welcome to this site')).toBeVisible();
 });
 
-// Skip the venue navigation test for now
+// Define the required navigation test, but skip it for now
 test.skip('can navigate from home to venue details', async ({ page }) => {
-  // To be implemented when venue list/details are available
+  // Navigate to home page
+  await page.goto('/');
+  
+  // For now, just verify we're on the home page
+  await expect(page.locator('text=Welcome to this site')).toBeVisible();
+  
+  /* 
+  // This is how the test would work when venue list is implemented:
+  await page.waitForSelector('.venue-list');
+  await page.click('.venue-list .venue-item:first-child');
+  await expect(page.locator('h1, h2')).toContainText('Venue details');
+  */
 });
 
 test('user can successfully log in with valid credentials', async ({ page }) => {
