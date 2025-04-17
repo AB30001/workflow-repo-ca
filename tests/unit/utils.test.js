@@ -5,7 +5,7 @@ import { getUsername } from '../../js/utils/storage.js';
 // Test isActivePath function
 describe('isActivePath', () => {
   test('returns true when current path matches href exactly', () => {
-    expect(isActivePath('/', '/')).toBe(true);
+    expect(isActivePath('/profile', '/profile')).toBe(true);
   });
 
   test('returns true for root path when path is "/" or "/index.html"', () => {
@@ -18,18 +18,17 @@ describe('isActivePath', () => {
   });
 
   test('returns false when paths don\'t match', () => {
-    expect(isActivePath('/about', '/profile')).toBe(false);
+    expect(isActivePath('/profile', '/about')).toBe(false);
   });
-});
-
-// Setup localStorage mock
-beforeEach(() => {
-  // Clear localStorage before each test
-  localStorage.clear();
 });
 
 // Test getUsername function
 describe('getUsername', () => {
+  beforeEach(() => {
+    // Clear localStorage before each test
+    localStorage.clear();
+  });
+
   test('returns name from user object in storage', () => {
     const user = { name: 'John Doe' };
     localStorage.setItem('user', JSON.stringify(user));
