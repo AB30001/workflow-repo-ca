@@ -21,11 +21,15 @@ test.skip('can navigate from home to venue details', async ({ page }) => {
   await page.waitForSelector('.venue-list', { timeout: 10000 });
   
   // Click the first venue
-  await page.click('.venue-list .venue-item:first-child');
+  await page.click('.venue-list .venue-item:first-child, .venue-list a:first-child');
   
-  // Verify venue details page has correct heading
-  const heading = await page.locator('h1, h2');
-  await expect(heading).toContainText('Venue details');
+  // Wait for navigation to complete
+  await page.waitForNavigation({ timeout: 10000 });
+  
+  // Check that the venue details page has loaded
+  // Look for a heading containing "Venue details"
+  const heading = page.locator('h1, h2, h3');
+  await expect(heading).toContainText('Venue details', { timeout: 5000 });
 });
 
 test('user can successfully log in with valid credentials', async ({ page }) => {
